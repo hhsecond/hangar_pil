@@ -14,14 +14,19 @@ class HangarPIL(BasePlugin):
         super().__init__(provides, accepts)
 
     def load(self, fpath, height=None, width=None):
-        """Load an image from file.
+        """
+        Load an image from file and returns the numpy array of the image along
+        with the name which will be used by hangar as sample name
 
         Parameters
         ----------
         fpath : str
            File path. eg: path/to/test.jpg
-        shape : tuple
-            2D shape of the image
+        height : int, float
+            height of the image
+        width : int, float
+            Width of the image
+
 
         Notes
         -----
@@ -39,7 +44,8 @@ class HangarPIL(BasePlugin):
         return np.array(im), self.sample_name(fpath)
 
     def save(self, fname, arr, format_str=None, **kwargs):
-        """Save an image to disk.
+        """
+        Save an image to disk.
 
         Parameters
         ----------
@@ -89,6 +95,26 @@ class HangarPIL(BasePlugin):
         img.save(fname, format=format_str, **kwargs)
 
     def board_show(self, arr, format_str=None, **kwargs):
+        """
+        Conver the numpy array from hangar to image and return that as base64
+        encoded to display in hangarboard
+
+        Parameters
+        ----------
+        arr : ndarray of uint8 or float
+            Array (image) to save.  Arrays of data-type uint8 should have
+            values in [0, 255], whereas floating-point arrays must be
+            in [0, 1].
+        format_str: str
+            Format to save as, this is defaulted to PNG if using a file-like
+            object; this will be derived from the extension if fname is a string
+        kwargs: dict
+            Keyword arguments to the Pillow save function (or tifffile save
+            function, for Tiff files). These are format dependent. For example,
+            Pillow's JPEG save function supports an integer ``quality`` argument
+            with values in [1, 95], while TIFFFile supports a ``compress``
+            integer argument with values in [0, 9].
+        """
         buffer = io.BytesIO()
         self.save(buffer, arr, format_str, **kwargs)
         buffer.seek(0)
