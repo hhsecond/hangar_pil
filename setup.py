@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="hangar_pil",
-    version="0.0.1",
+    version="0.1.0",
     author="hhsecond",
     author_email="sherin@tensorwerk.com",
     description="PIL plugin for hangar",
@@ -19,5 +19,6 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     python_requires='>=3.6',
+    install_requires=['Pillow'],
     entry_points={'hangar.external.plugins': 'pil = hangar_pil:HangarPIL'}
 )
