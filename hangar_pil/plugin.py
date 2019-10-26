@@ -78,7 +78,7 @@ class HangarPIL(BasePlugin):
         # default to PNG
         if format_str is None:
             format_str = "PNG"
-        fname = os.path.join(outdir, sample_n, format_str)
+        fpath = os.path.join(outdir, f"{sample_n}.{format_str}")
 
         if arr.dtype.kind == 'b':
             arr = arr.astype(np.uint8)
@@ -91,7 +91,7 @@ class HangarPIL(BasePlugin):
                 raise ValueError("Invalid number of channels in image array.")
 
         img = Image.fromarray(arr)
-        img.save(fname, format=format_str, **kwargs)
+        img.save(fpath, format=format_str, **kwargs)
 
     def board_show(self, arr, format_str=None, **kwargs):
         """

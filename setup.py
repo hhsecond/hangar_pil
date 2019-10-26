@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="hangar_pil",
-    version="0.3.0",
+    version="0.3.1",
     author="hhsecond",
     author_email="sherin@tensorwerk.com",
     description="PIL plugin for hangar",
