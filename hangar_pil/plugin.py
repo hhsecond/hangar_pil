@@ -1,3 +1,4 @@
+import os
 import io
 import base64
 
@@ -43,7 +44,7 @@ class HangarPIL(BasePlugin):
             im = im.resize(shape)
         return np.array(im), self.sample_name(fpath)
 
-    def save(self, fname, arr, format_str=None, **kwargs):
+    def save(self, arr, outdir, sample_n, format_str, **kwargs):
         """
         Save an image to disk.
 
@@ -74,12 +75,10 @@ class HangarPIL(BasePlugin):
         ----------
         .. [1] http://pillow.readthedocs.org/en/latest/handbook/image-file-formats.html
         """
-        # default to PNG if file-like object
-        if not isinstance(fname, str) and format_str is None:
+        # default to PNG
+        if format_str is None:
             format_str = "PNG"
-        # Check for png in filename
-        if (isinstance(fname, str) and fname.lower().endswith(".png")):
-            format_str = "PNG"
+        fname = os.path.join(outdir, sample_n, format_str)
 
         if arr.dtype.kind == 'b':
             arr = arr.astype(np.uint8)
